@@ -14,7 +14,7 @@ public class Main {
         Person person3 = new Person("Egor", 17);
         Person person4 = new Person("Vlad", 10);
 
-        Person person5 = new Person("SuperPerson", 16){
+        Person person5 = new Person("SuperPerson", 16) {
             @Override
             public String getName() {
                 return "my name: " + super.getName();
@@ -32,9 +32,11 @@ public class Main {
         System.out.println("personList before = " + Streams.getStreamList());
 
         System.out.println("my stream: " + streams.filter(p -> p.getAge() > 15)
-                .transform(p -> new Person(p.getName(), p.getAge() + 2))
-                .filter(p -> p.getAge() > 18)
-                .toMap(p -> p.getName(), p -> p));
+                                                    .transform(p -> new Person(p.getName(), p.getAge() + 2))
+                                                    .filter(p -> p.getAge() > 18)
+                                                    .transform(p -> new Person(p.getName() + "1", p.getAge() + 1))
+                                                    .filter(p -> p.getAge() < 21)
+                                                    .toMap(p -> p.getName(), p -> p));
 
         System.out.println("personList after: " + personList);
 
@@ -43,8 +45,10 @@ public class Main {
 
         Stream<Person> stream = personList.stream();
         System.out.println("stream in java: " + stream.filter(p -> p.getAge() > 15)
-                .map(p -> new Person(p.getName(), p.getAge() + 2))
-                .filter(p -> p.getAge() > 18)
-                .collect(Collectors.toMap(p -> p.getName(), p -> p)));
+                                                        .map(p -> new Person(p.getName(), p.getAge() + 2))
+                                                        .filter(p -> p.getAge() > 18)
+                                                        .map(p -> new Person(p.getName() + "1", p.getAge() + 1))
+                                                        .filter(p -> p.getAge() < 21)
+                                                        .collect(Collectors.toMap(p -> p.getName(), p -> p)));
     }
 }
