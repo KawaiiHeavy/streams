@@ -3,6 +3,8 @@ import pojo.Person;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
@@ -29,13 +31,20 @@ public class Main {
 
         System.out.println("personList before = " + Streams.getStreamList());
 
-        System.out.println("map = " + streams.filter(p -> p.getAge() > 15)
+        System.out.println("my stream: " + streams.filter(p -> p.getAge() > 15)
                 .transform(p -> new Person(p.getName(), p.getAge() + 2))
-                .toMap(p -> ((Person)p).getName(), p -> p));
+                .filter(p -> p.getAge() > 18)
+                .toMap(p -> p.getName(), p -> p));
 
         System.out.println("personList after: " + personList);
 
         // Вспомогательный метод, чтобы смотреть, в каком состоянии коллекция в стриме сейчас
         System.out.println("list: " + Streams.getStreamList());
+
+        Stream<Person> stream = personList.stream();
+        System.out.println("stream in java: " + stream.filter(p -> p.getAge() > 15)
+                .map(p -> new Person(p.getName(), p.getAge() + 2))
+                .filter(p -> p.getAge() > 18)
+                .collect(Collectors.toMap(p -> p.getName(), p -> p)));
     }
 }
