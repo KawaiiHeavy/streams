@@ -1,15 +1,27 @@
 package pojo;
 
+import java.util.UUID;
+
 public class Person {
 
+    private UUID id;
     private String name;
     private Integer age;
 
     public Person(){}
 
     public Person(String name, Integer age){
+        this.id = UUID.randomUUID();
         this.name = name;
         this.age = age;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -31,7 +43,8 @@ public class Person {
     @Override
     public String toString() {
         return "Person{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", age=" + age +
                 '}';
     }
